@@ -1,21 +1,119 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* Global Typography */
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Inter", sans-serif; /* Default font for the entire website */
+  background-color: #000;
+  color: white;
+}
+
+/* Custom Selection Styling */
+::selection {
+  background: #6A0DAD;
+  color: #fff;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #1A1A1A;
+}
+::-webkit-scrollbar-thumb {
+  background: #6A0DAD;
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #9B30FF;
+}
+
+/* --- Hero Section Styles --- */
+.hero-title {
+  font-family: "Anton", sans-serif !important;
+  font-weight: 900 !important;
+  user-select: none;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, #9d27f1, #6420a4, #9B30FF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: floatingText 6s infinite ease-in-out alternate;
+}
+
+/* Floating Animation */
+@keyframes floatingText {
+  0% { transform: translateY(-10px); }
+  50% { transform: translateY(10px); }
+  100% { transform: translateY(-10px); }
+}
+
+/* --- Navbar Styles --- */
+.navbar {
+  transition: transform 0.5s ease-in-out;
+}
+.navbar-hidden {
+  transform: translateY(-100%);
+}
+
+/* Navbar Hover Effects */
+.navbar a {
+  transition: color 0.3s ease-in-out;
+}
+.navbar a:hover {
+  color: #9B30FF;
+}
+
+/* --- Footer Styles --- */
+footer {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+footer.visible {
+  opacity: 1;
+}
+
+/* --- Buttons --- */
+button {
+  transition: all 0.3s ease-in-out;
+}
+button:hover {
+  background-color: #6A0DAD !important;
+  color: white;
+}
+
+/* --- Mobile Menu --- */
+.mobile-menu {
+  background: rgba(0, 0, 0, 0.9);
+  transition: opacity 0.5s ease-in-out;
+}
+.mobile-menu a:hover {
+  color: #c791fb;
+}
+
+/* --- Animations --- */
+.fade-in {
+  animation: fadeIn 1s ease-in-out;
+}
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* Staggered Text Animation */
+.staggered-text {
+  opacity: 0;
+  animation: fadeInUp 1.2s ease-in-out forwards;
+}
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0px); }
 }
