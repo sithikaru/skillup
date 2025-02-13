@@ -117,3 +117,36 @@ button:hover {
   0% { opacity: 0; transform: translateY(20px); }
   100% { opacity: 1; transform: translateY(0px); }
 }
+
+/* About Page Heading */
+.about-heading {
+  font-family: "Anton", sans-serif;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, #9d27f1, #6420a4, #9B30FF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Floating Section Animation */
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0px); }
+}
+
+.about-section {
+  animation: fadeInUp 1.5s ease-in-out forwards;
+}
+
+/* Text Gradient */
+.text-skillup-gradient {
+  background: linear-gradient(90deg, #a55be1, #620c9f, #ea30ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+
+/* Scroll-triggered fade-in */
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0px); }
+}
