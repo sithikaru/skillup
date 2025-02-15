@@ -28,9 +28,8 @@ const PhasesSection = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
-    <section className="phases_wrap relative min-h-screen flex items-center bg-black text-white">
-      <div className="container mx-auto px-6 md:px-8 py-12 md:py-16 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16">
-        
+    <section className="relative py-12 md:py-24 bg-black text-white">
+      <div className="container mx-auto px-4 md:px-8 py-8 md:py-16 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16">
         {/* Left Side - Dynamic Phase Description */}
         <motion.div
           key={activeIndex}
@@ -40,10 +39,10 @@ const PhasesSection = () => {
           transition={{ duration: 0.5, ease: "easeOut" }}
           className="phases_description max-w-lg"
         >
-          <h1 className="text-4xl md:text-8xl font-bold">
+          <h1 className="text-3xl md:text-8xl font-bold">
             {phases[activeIndex].title}
           </h1>
-          <p className="text-base md:text-3xl font-light leading-relaxed mt-4">
+          <p className="text-base md:text-3xl font-light leading-relaxed mt-4 min-h-44">
             {phases[activeIndex].description}
           </p>
         </motion.div>

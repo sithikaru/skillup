@@ -118,16 +118,14 @@ const About = () => {
   return (
     <section
       ref={ref}
-      className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden px-6 text-center"
+      className="relative h-auto py-20 md:min-h-screen w-full flex flex-col items-center justify-center overflow-hidden px-4 md:px-6 text-center"
       id="next-section"
     >
       {/* Animated Background */}
       <AnimatedBackground />
 
       {/* Word-by-word Scroll Effect */}
-      <motion.div
-        className="relative z-10 max-w-4xl text-3xl font-extrabold uppercase leading-loose tracking-tight text-white md:text-5xl"
-      >
+      <motion.div className="relative z-10 max-w-4xl text-2xl md:text-5xl font-extrabold uppercase leading-snug md:leading-loose tracking-tight text-white">
         <AnimatedText
           text="Skill Up 3.0 is a transformative workshop series designed to bridge the gap between academic learning and real-world industry demands."
           scrollProgress={scrollProgress}
@@ -139,7 +137,7 @@ const About = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1.5, delay: 1 }}
-        className="relative z-10 mt-10 text-xl italic text-gray-300"
+        className="relative z-10 mt-6 md:mt-10 text-lg md:text-xl italic text-gray-300"
       >
         &quot;Empowering students for a better future.&quot;
       </motion.p>
