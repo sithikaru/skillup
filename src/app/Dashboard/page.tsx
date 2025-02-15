@@ -1,57 +1,56 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { auth } from "@/lib/firebase";
-import { signOut, onAuthStateChanged } from "firebase/auth";
-import { getFirestore, doc, getDoc } from "firebase/firestore";
+import { auth, db } from "@/lib/firebase";
+import { onAuthStateChanged } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
 
-const db = getFirestore();
-
-export default function DashboardPage() {
+export default function Dashboard() {
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const router = useRouter();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (authUser) => {
-      if (!authUser) {
-        router.push("/login"); // Redirect if not logged in
-      } else {
-        const userDoc = await getDoc(doc(db, "users", authUser.uid));
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      if (currentUser) {
+        // Fetch user details from Firestore
+        const userDoc = await getDoc(doc(db, "users", currentUser.uid));
         if (userDoc.exists()) {
           setUser(userDoc.data());
         }
+      } else {
+        window.location.href = "/login"; // Redirect to login if not authenticated
       }
       setLoading(false);
     });
 
     return () => unsubscribe();
-  }, [router]);
+  }, []);
 
-  const handleLogout = async () => {
-    await signOut(auth);
-    router.push("/login");
-  };
-
-  if (loading) {
-    return <div className="min-h-screen flex items-center justify-center text-white">Loading...</div>;
-  }
+  if (loading) return <div className="text-white">Loading...</div>;
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-[#191724] text-white p-6">
-      <div className="max-w-lg w-full bg-[#24202e] shadow-lg rounded-xl p-6 text-center">
-        <h2 className="text-2xl font-semibold mb-4">Welcome, {user?.fullName || "User"}!</h2>
-        <p className="text-gray-400">Email: {user?.email}</p>
-        <p className="text-gray-400">Contact: {user?.contactNumber || "N/A"}</p>
-        <button
-          onClick={handleLogout}
-          className="mt-6 bg-red-500 hover:bg-red-600 p-3 rounded text-white font-bold w-full"
-        >
-          Logout
-        </button>
-      </div>
+    <div className="max-w-2xl mx-auto p-6 text-white">
+      <h2 className="text-2xl font-bold mb-4">Dashboard</h2>
+
+      {/* If the user is not verified, show pending message */}
+      {!user?.verified ? (
+        <div className="bg-yellow-500 text-black p-4 rounded">
+          <h3 className="text-lg font-bold">Payment Pending Approval</h3>
+          <p>Your payment is under review. Please wait for admin approval.</p>
+        </div>
+      ) : (
+        <div className="bg-green-500 text-black p-4 rounded">
+          <h3 className="text-lg font-bold">Approved</h3>
+          <p>Welcome to Skill Up 3.0! You now have full access.</p>
+        </div>
+      )}
+
+      <button
+        onClick={() => auth.signOut().then(() => (window.location.href = "/login"))}
+        className="bg-red-500 text-white p-2 rounded mt-4"
+      >
+        Logout
+      </button>
     </div>
   );
 }

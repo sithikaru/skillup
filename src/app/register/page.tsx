@@ -2,9 +2,9 @@
 "use client";
 import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth, db } from "@/lib/firebase";
+import { auth, db, storage } from "@/lib/firebase";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
-import { uploadToDrive } from "@/lib/googleDrive";
 
 export default function Register() {
   const [form, setForm] = useState({
@@ -31,7 +31,7 @@ export default function Register() {
     setLoading(true);
 
     try {
-      // Create user in Firebase Authentication
+      // Create user account in Firebase Authentication
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         form.email,
@@ -39,8 +39,14 @@ export default function Register() {
       );
       const userId = userCredential.user.uid;
 
-      // Upload file to Google Drive
-      const fileLink = await uploadToDrive(form.file);
+      // Upload bank slip to Firebase Storage
+      const fileRef = ref(storage, `bankSlips/${userId}`);
+      if (form.file) {
+        await uploadBytes(fileRef, form.file);
+      } else {
+        throw new Error("File is required");
+      }
+      const fileUrl = await getDownloadURL(fileRef);
 
       // Save user data in Firestore
       await setDoc(doc(db, "users", userId), {
@@ -48,7 +54,7 @@ export default function Register() {
         email: form.email,
         contact: form.contact,
         username: form.username,
-        bankSlipUrl: fileLink,
+        bankSlipUrl: fileUrl,
         verified: false, // Mark as pending approval
       });
 
