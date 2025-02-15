@@ -5,13 +5,13 @@ import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyB1cGNIsGaEii07JtTFj5ICbn-HPLPO348",
-    authDomain: "skill-up-3.firebaseapp.com",
-    projectId: "skill-up-3",
-    storageBucket: "skill-up-3.firebasestorage.app",
-    messagingSenderId: "622872630056",
-    appId: "1:622872630056:web:64848be29702e30042761d"
-};
+    apiKey: "AIzaSyD7QTphzIOGuXL3luGQaSliQaI0dx_oKsg",
+    authDomain: "skillup-ed290.firebaseapp.com",
+    projectId: "skillup-ed290",
+    storageBucket: "skillup-ed290.firebasestorage.app",
+    messagingSenderId: "492581200583",
+    appId: "1:492581200583:web:b3009418842a08e4c854e2"
+  };
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
