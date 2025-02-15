@@ -1,85 +1,124 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { auth, db, storage } from "@/lib/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth, db } from "@/lib/firebase";
 import { doc, setDoc } from "firebase/firestore";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { uploadToDrive } from "@/lib/googleDrive";
 
-export default function RegisterPage() {
-  const router = useRouter();
-  const [formData, setFormData] = useState({
-    fullName: "",
+export default function Register() {
+  const [form, setForm] = useState({
+    name: "",
     email: "",
-    contactNumber: "",
+    contact: "",
     username: "",
     password: "",
-    bankSlip: null,
+    file: null,
   });
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
 
-  const handleFileChange = (e: any) => {
-    const file = e.target.files[0];
-    if (file && ["image/jpeg", "image/png", "application/pdf"].includes(file.type)) {
-      setFormData({ ...formData, bankSlip: file });
-      setError("");
-    } else {
-      setError("Only JPEG, PNG, or PDF files are allowed.");
-    }
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (e: any) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleRegister = async (e: any) => {
+  const handleFileChange = (e: any) => {
+    setForm({ ...form, file: e.target.files[0] });
+  };
+
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    if (!formData.bankSlip) {
-      setError("Please upload a bank slip before registering.");
-      return;
-    }
-
     setLoading(true);
+
     try {
-      // Create user in Firebase Auth
-      const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
-      const user = userCredential.user;
+      // Create user in Firebase Authentication
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        form.email,
+        form.password
+      );
+      const userId = userCredential.user.uid;
 
-      // Upload bank slip to Firebase Storage
-      const storageRef = ref(storage, `bankSlips/${user.uid}`);
-      await uploadBytes(storageRef, formData.bankSlip);
-      const bankSlipURL = await getDownloadURL(storageRef);
+      // Upload file to Google Drive
+      const fileLink = await uploadToDrive(form.file);
 
-      // Store user data in Firestore with "pending" status
-      await setDoc(doc(db, "users", user.uid), {
-        fullName: formData.fullName,
-        email: formData.email,
-        contactNumber: formData.contactNumber,
-        username: formData.username,
-        bankSlipURL,
-        status: "pending", // Waiting for admin approval
-        role: "user",
+      // Save user data in Firestore
+      await setDoc(doc(db, "users", userId), {
+        name: form.name,
+        email: form.email,
+        contact: form.contact,
+        username: form.username,
+        bankSlipUrl: fileLink,
+        verified: false, // Mark as pending approval
       });
 
-      router.push("/login");
-    } catch (err) {
-      setError("Registration failed. Try again.");
-      console.error(err);
+      alert("Registration submitted! Your payment is pending approval.");
+      window.location.href = "/dashboard"; // Redirect to pending page
+    } catch (error) {
+      console.error(error);
+      alert("Error: ");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white">
-      <h2 className="text-2xl font-bold">Register for Skill Up 3.0</h2>
-      <form className="mt-5 w-96 space-y-4" onSubmit={handleRegister}>
-        <input type="text" placeholder="Full Name" className="input" required onChange={(e) => setFormData({ ...formData, fullName: e.target.value })} />
-        <input type="email" placeholder="Email" className="input" required onChange={(e) => setFormData({ ...formData, email: e.target.value })} />
-        <input type="text" placeholder="Contact Number" className="input" required onChange={(e) => setFormData({ ...formData, contactNumber: e.target.value })} />
-        <input type="text" placeholder="Username" className="input" required onChange={(e) => setFormData({ ...formData, username: e.target.value })} />
-        <input type="password" placeholder="Password" className="input" required onChange={(e) => setFormData({ ...formData, password: e.target.value })} />
-        <input type="file" accept="image/jpeg,image/png,application/pdf" onChange={handleFileChange} />
-        {error && <p className="text-red-500">{error}</p>}
-        <button type="submit" className="btn bg-blue-500 w-full" disabled={loading}>
-          {loading ? "Registering..." : "Register"}
+    <div className="max-w-md mx-auto bg-gray-900 p-6 rounded-lg">
+      <h2 className="text-xl font-bold text-white mb-4">Register</h2>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <input
+          type="text"
+          name="name"
+          placeholder="Full Name"
+          onChange={handleChange}
+          required
+          className="p-2 border rounded"
+        />
+        <input
+          type="email"
+          name="email"
+          placeholder="IIT Email"
+          onChange={handleChange}
+          required
+          className="p-2 border rounded"
+        />
+        <input
+          type="text"
+          name="contact"
+          placeholder="Contact Number"
+          onChange={handleChange}
+          required
+          className="p-2 border rounded"
+        />
+        <input
+          type="text"
+          name="username"
+          placeholder="Username"
+          onChange={handleChange}
+          required
+          className="p-2 border rounded"
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          onChange={handleChange}
+          required
+          className="p-2 border rounded"
+        />
+        <input
+          type="file"
+          onChange={handleFileChange}
+          accept=".jpg,.jpeg,.png,.pdf"
+          required
+          className="p-2 border rounded"
+        />
+        <button
+          type="submit"
+          disabled={loading}
+          className="bg-blue-600 text-white p-2 rounded disabled:bg-gray-500"
+        >
+          {loading ? "Submitting..." : "Register"}
         </button>
       </form>
     </div>
