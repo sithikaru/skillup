@@ -13,25 +13,47 @@ export default function Register() {
     contact: "",
     username: "",
     password: "",
-    file: null,
+    file: null as File | null,
   });
 
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleChange = (e: any) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setForm((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value.trim(),
+    }));
   };
 
-  const handleFileChange = (e: any) => {
-    setForm({ ...form, file: e.target.files[0] });
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files || e.target.files.length === 0) {
+      setError("Please select a file.");
+      return;
+    }
+
+    const selectedFile = e.target.files[0];
+    const allowedTypes = ["image/jpeg", "image/png", "application/pdf"];
+
+    if (!allowedTypes.includes(selectedFile.type)) {
+      setError("Invalid file type. Only JPG, PNG, and PDF are allowed.");
+      return;
+    }
+
+    setError(null);
+    setForm((prev) => ({ ...prev, file: selectedFile }));
   };
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setError(null);
 
     try {
-      // Create user account in Firebase Authentication
+      if (!form.file) throw new Error("File is required.");
+      if (!form.password || form.password.length < 6)
+        throw new Error("Password must be at least 6 characters.");
+
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         form.email,
@@ -39,30 +61,25 @@ export default function Register() {
       );
       const userId = userCredential.user.uid;
 
-      // Upload bank slip to Firebase Storage
       const fileRef = ref(storage, `bankSlips/${userId}`);
-      if (form.file) {
-        await uploadBytes(fileRef, form.file);
-      } else {
-        throw new Error("File is required");
-      }
+      await uploadBytes(fileRef, form.file);
       const fileUrl = await getDownloadURL(fileRef);
 
-      // Save user data in Firestore
       await setDoc(doc(db, "users", userId), {
         name: form.name,
         email: form.email,
         contact: form.contact,
         username: form.username,
         bankSlipUrl: fileUrl,
-        verified: false, // Mark as pending approval
+        verified: false,
+        createdAt: new Date(),
       });
 
-      alert("Registration submitted! Your payment is pending approval.");
-      window.location.href = "/dashboard"; // Redirect to pending page
-    } catch (error) {
-      console.error(error);
-      alert("Error: ");
+      alert("Registration submitted successfully!");
+      window.location.href = "/dashboard";
+    } catch (error: any) {
+      console.error("Registration Error:", error);
+      setError(error.message || "An unexpected error occurred.");
     } finally {
       setLoading(false);
     }
@@ -71,6 +88,7 @@ export default function Register() {
   return (
     <div className="max-w-md mx-auto bg-gray-900 p-6 rounded-lg">
       <h2 className="text-xl font-bold text-white mb-4">Register</h2>
+      {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
           type="text"
@@ -107,7 +125,7 @@ export default function Register() {
         <input
           type="password"
           name="password"
-          placeholder="Password"
+          placeholder="Password (Min. 6 chars)"
           onChange={handleChange}
           required
           className="p-2 border rounded"

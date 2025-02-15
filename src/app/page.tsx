@@ -1,6 +1,7 @@
 import Hero from "@/app/components/Hero";
 import About from "@/app/components/About";
 import PhasesSection from "./components/PhasesSection";
+import SpeakersSection from "./components/Speakers";
 
 export default function Home() {
   return (
@@ -8,6 +9,7 @@ export default function Home() {
       <Hero />
       <About />
       <PhasesSection />
+      <SpeakersSection/>
     </div>
   );
 }
