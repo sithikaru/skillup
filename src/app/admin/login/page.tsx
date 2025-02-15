@@ -14,7 +14,7 @@ export default function AdminLogin() {
 
     // Hardcoded admin credentials
     const ADMIN_USERNAME = "admin";
-    const ADMIN_PASSWORD = "skillupadmin";
+    const ADMIN_PASSWORD = "su2025";
 
     if (form.username === ADMIN_USERNAME && form.password === ADMIN_PASSWORD) {
       localStorage.setItem("adminAuth", "true"); // Save login state
@@ -27,7 +27,7 @@ export default function AdminLogin() {
   return (
     <div className="max-w-md mx-auto bg-gray-900 p-6 rounded-lg">
       <h2 className="text-xl font-bold text-white mb-4">Admin Login</h2>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4 text-black">
         <input
           type="text"
           name="username"
