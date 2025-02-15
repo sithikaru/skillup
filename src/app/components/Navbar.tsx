@@ -144,15 +144,6 @@ const Navbar = () => {
             </Link>
           </motion.div>
 
-          <motion.div whileHover={{ scale: 1.05 }}>
-            <Link
-              href="/about-us"
-              className="block py-3 text-lg hover:text-purple-400"
-              onClick={() => setIsOpen(false)}
-            >
-              About Us
-            </Link>
-          </motion.div>
 
           <motion.div whileHover={{ scale: 1.05 }}>
             <Link

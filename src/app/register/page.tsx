@@ -127,7 +127,7 @@ export default function Register() {
             value={form.email}
             onChange={handleChange}
             className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            placeholder="john@iit.ac.lk"
+            placeholder="john.20230000@iit.ac.lk"
           />
           {errors.email && <span className="text-red-400 text-sm">{errors.email}</span>}
         </div>
@@ -153,7 +153,7 @@ export default function Register() {
             value={form.username}
             onChange={handleChange}
             className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            placeholder="john_doe123"
+            placeholder="name_20230001"
           />
           {errors.username && <span className="text-red-400 text-sm">{errors.username}</span>}
         </div>
