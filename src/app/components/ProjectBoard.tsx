@@ -5,12 +5,12 @@ import { useRef, useEffect } from "react";
 
 const teamMembers = [
   { role: "Project Head (President)", name: "Hashaka Munasinghe", image: "/hashaka.jpg" },
-  { role: "Chairperson", name: "Ranuli Sakya", image: "/ranuli.jpg" },
-  { role: "Project Head", name: "Thinuki Weerasinghe", image: "/thinuki.jpg" },
-  { role: "Secretary", name: "Monali Sooriyaarachchi", image: "/monali.jpg" },
-  { role: "Secretary", name: "Dewmi Tharunya", image: "/dewmi.jpg" },
-  { role: "Treasurer", name: "Dinath Wijesooriya", image: "/dinath.jpg" },
-  { role: "Editor", name: "Deveen Rathnayake", image: "/deveen.jpg" }
+  { role: "Chairperson", name: "Ranuli Sakya", image: "/Ranuli.jpg" },
+  { role: "Project Head", name: "Thinuki Weerasinghe", image: "/Thinuki.jpg" },
+  { role: "Secretary", name: "Monali Sooriyaarachchi", image: "/Monali.jpg" },
+  { role: "Secretary", name: "Dewmi Tharunya", image: "/Dewmi.jpg" },
+  { role: "Treasurer", name: "Dinath Wijesooriya", image: "/Dinath.jpg" },
+  { role: "Editor", name: "Deveen Rathnayake", image: "/Deveen.jpg" }
 ];
 
 const AnimatedCard = ({ role, name, image }: { role: string; name: string; image: string }) => {
