@@ -6,7 +6,7 @@ import { useRef, useEffect } from "react";
 const teamMembers = [
   { role: "Project Chairperson", name: "Ranuli Sakya", image: "/Ranuli.jpg" },
   { role: "Project Head", name: "Thinuki Weerasinghe", image: "/Thinuki.jpg" },
-  { role: "Project Secretary", name: "Monali Sooriyaarachchi", image: "/Monali.jpg" },
+  { role: "Project Secretary", name: "Monali Sooriarachchi", image: "/Monali.jpg" },
   { role: "Project Secretary", name: "Dewmi Tharunya", image: "/Dewmi.jpg" },
   { role: "Project Treasurer", name: "Dinath Wijesooriya", image: "/Dinath.jpg" },
   { role: "Editor", name: "Deveen Rathnayake", image: "/Deveen.jpg" },
