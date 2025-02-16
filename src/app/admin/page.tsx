@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import { useEffect, useState } from "react";
 import { db } from "@/lib/firebase";
@@ -18,6 +19,7 @@ interface User {
 export default function AdminDashboard() {
   const [users, setUsers] = useState<User[]>([]);
   const [rejectingUser, setRejectingUser] = useState<User | null>(null);
+  const [approvedUsers, setApprovedUsers] = useState<User[]>([]);
   const [rejectionReason, setRejectionReason] = useState("");
 
   useEffect(() => {
@@ -31,6 +33,11 @@ export default function AdminDashboard() {
 
         // Filter out already verified or previously rejected
         const pendingUsers = usersList.filter((user) => !user.verified && !user.rejected);
+        const verifiedUsers = usersList.filter(
+          (user) => user.verified && !user.rejected
+        );
+
+        setApprovedUsers(verifiedUsers);
         setUsers(pendingUsers);
       } catch (error) {
         console.error("Error fetching users:", error);
@@ -118,6 +125,37 @@ export default function AdminDashboard() {
             </div>
           </div>
         ))
+      )}
+
+      {/* Approved Users */}
+      <h3 className="text-xl font-semibold mt-6 mb-2">Approved Users</h3>
+      {approvedUsers.length === 0 ? (
+        <p>No users have been approved yet.</p>
+      ) : (
+        <table className="w-full text-left table-auto border-collapse">
+          <thead>
+            <tr>
+              <th className="border-b border-gray-700 p-2">Name</th>
+              <th className="border-b border-gray-700 p-2">Email</th>
+              <th className="border-b border-gray-700 p-2">Contact</th>
+              <th className="border-b border-gray-700 p-2">Bank Slip</th>
+            </tr>
+          </thead>
+          <tbody>
+            {approvedUsers.map((user) => (
+              <tr key={user.id} className="border-b border-gray-800">
+                <td className="p-2">{user.name}</td>
+                <td className="p-2">{user.email}</td>
+                <td className="p-2">{user.contact}</td>
+                <td className="p-2">
+                  <a href={user.bankSlipUrl} target="_blank" className="text-blue-500">
+                    View Slip
+                  </a>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       )}
 
       {/* Logout Button */}

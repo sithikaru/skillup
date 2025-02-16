@@ -9,8 +9,9 @@ export default function Home() {
     <div className="space-y-16">
       <Hero />
       <About  />
-      <ProjectBoard />
       <PhasesSection />
+      <ProjectBoard />
+      
       {/* <SpeakersSection/> */}
     </div>
   );
