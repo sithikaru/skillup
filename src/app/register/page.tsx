@@ -18,46 +18,45 @@ export default function Register() {
 
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [fileError, setFileError] = useState("");
+  const [fileName, setFileName] = useState<string>("");
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
 
     if (!form.name.trim()) newErrors.name = "Name is required";
-    if (!/^(07|94)\d{8}$/.test(form.contact)) newErrors.contact = "Invalid Sri Lankan phone number";
-    if (!/^[a-zA-Z0-9_]{4,20}$/.test(form.username)) newErrors.username = "4-20 characters (letters, numbers, underscores)";
-    if (form.password.length < 6) newErrors.password = "Password must be at least 6 characters";
-    if (!form.file) setFileError("Bank slip is required");
+
+    if (!/^(07|94)\d{8}$/.test(form.contact))
+      newErrors.contact = "Invalid Sri Lankan phone number";
+
+    if (!/^[a-zA-Z0-9_]{4,20}$/.test(form.username))
+      newErrors.username = "4-20 characters (letters, numbers, underscores)";
+
+    if (form.password.length < 6 || !/\d/.test(form.password))
+      newErrors.password =
+        "Password must be at least 6 characters and contain a number";
+
+    if (!form.file) newErrors.file = "Bank slip is required";
+    else if (!["image/jpeg", "image/png", "application/pdf"].includes(form.file.type))
+      newErrors.file = "Only JPG, PNG, or PDF files allowed";
+    else if (form.file.size > 5 * 1024 * 1024) // 5MB limit
+      newErrors.file = "File size must be less than 5MB"; // Fixed error message
 
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0 && !fileError;
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setForm(prev => ({ ...prev, [name]: value }));
-    // Clear error when user starts typing
-    if (errors[name]) setErrors(prev => ({ ...prev, [name]: "" }));
+    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    setErrors((prev) => ({ ...prev, [e.target.name]: "" }));
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFileError("");
     if (!e.target.files?.length) return;
 
     const file = e.target.files[0];
-    const allowedTypes = ["image/jpeg", "image/png", "application/pdf"];
-    
-    if (!allowedTypes.includes(file.type)) {
-      setFileError("Only JPG, PNG, or PDF files allowed");
-      return;
-    }
-
-    if (file.size > 5 * 1024 * 1024) { // 5MB limit
-      setFileError("File size must be less than 2MB");
-      return;
-    }
-
-    setForm(prev => ({ ...prev, file }));
+    setForm((prev) => ({ ...prev, file }));
+    setFileName(file.name);
+    setErrors((prev) => ({ ...prev, file: "" }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -88,112 +87,59 @@ export default function Register() {
       alert("Registration submitted for verification!");
       window.location.href = "/Dashboard";
     } catch (error: any) {
-      console.error("Registration Error:", error);
-      setErrors(prev => ({ ...prev, form: error.message || "An unexpected error occurred" }));
+      let errorMsg = "An unexpected error occurred";
+      if (error.code === "auth/email-already-in-use") errorMsg = "Email is already registered.";
+      else if (error.code === "auth/weak-password") errorMsg = "Weak password. Try a stronger one.";
+      else if (error.code === "auth/invalid-email") errorMsg = "Invalid email format.";
+
+      setErrors((prev) => ({ ...prev, form: errorMsg }));
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="max-w-md mx-auto bg-gray-800 p-8 rounded-xl shadow-lg space-y-6">
-      <h2 className="text-2xl font-bold text-center text-white">Student Registration</h2>
-      
+    <div className="max-w-md mx-auto bg-gray-800 p-8 rounded-xl shadow-lg space-y-6 mt-20 ">
+      <h2 className="text-2xl font-bold tracking-wide bg-gradient-to-r from-purple-400 to-purple-700 bg-clip-text text-transparent text-center">
+        Skillup Registration
+      </h2>
+
       {errors.form && (
-        <div className="p-3 bg-red-800/25 text-red-500 rounded-lg text-sm">
-          {errors.form}
-        </div>
+        <div className="p-3 bg-red-800/25 text-red-500 rounded-lg text-sm">{errors.form}</div>
       )}
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="space-y-2">
-          <label className="block text-sm font-medium text-gray-300">Full Name</label>
-          <input
-            type="text"
-            name="name"
-            value={form.name}
-            onChange={handleChange}
-            className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            placeholder="John Doe"
-          />
-          {errors.name && <span className="text-red-400 text-sm">{errors.name}</span>}
-        </div>
-
-        <div className="space-y-2">
-          <label className="block text-sm font-medium text-gray-300">IIT Email</label>
-          <input
-            type="email"
-            name="email"
-            value={form.email}
-            onChange={handleChange}
-            className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            placeholder="john.20230000@iit.ac.lk"
-          />
-          {errors.email && <span className="text-red-400 text-sm">{errors.email}</span>}
-        </div>
-
-        <div className="space-y-2">
-          <label className="block text-sm font-medium text-gray-300">Contact Number</label>
-          <input
-            type="tel"
-            name="contact"
-            value={form.contact}
-            onChange={handleChange}
-            className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            placeholder="0712345678"
-          />
-          {errors.contact && <span className="text-red-400 text-sm">{errors.contact}</span>}
-        </div>
-
-        <div className="space-y-2">
-          <label className="block text-sm font-medium text-gray-300">Username</label>
-          <input
-            type="text"
-            name="username"
-            value={form.username}
-            onChange={handleChange}
-            className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            placeholder="name_20230001"
-          />
-          {errors.username && <span className="text-red-400 text-sm">{errors.username}</span>}
-        </div>
-
-        <div className="space-y-2">
-          <label className="block text-sm font-medium text-gray-300">Password</label>
-          <input
-            type="password"
-            name="password"
-            value={form.password}
-            onChange={handleChange}
-            className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            placeholder="••••••••"
-          />
-          {errors.password && <span className="text-red-400 text-sm">{errors.password}</span>}
-        </div>
-
-        <div className="space-y-2">
-          <label className="block text-sm font-medium text-gray-300">
-            Bank Payment Slip (PDF/Image)
-          </label>
-          <div className="flex items-center space-x-2">
+        {[
+          { label: "Full Name", name: "name", type: "text", placeholder: "John Doe" },
+          { label: "Email", name: "email", type: "email", placeholder: "john.20230000@iit.ac.lk" },
+          { label: "Contact Number", name: "contact", type: "tel", placeholder: "0712345678" },
+          { label: "Username", name: "username", type: "text", placeholder: "name_20230001" },
+          { label: "Password", name: "password", type: "password", placeholder: "••••••••" },
+        ].map(({ label, name, type, placeholder }) => (
+          <div key={name} className="space-y-2">
+            <label className="block text-sm font-medium text-gray-300">{label}</label>
             <input
-              type="file"
-              onChange={handleFileChange}
-              accept=".jpg,.jpeg,.png,.pdf"
-              className="block w-full text-sm text-gray-400
-                file:mr-4 file:py-2 file:px-4
-                file:rounded-full file:border-0
-                file:text-sm file:font-semibold
-                file:bg-blue-500 file:text-white
-                hover:file:bg-blue-400"
+              type={type}
+              name={name}
+              value={form[name as 'name' | 'email' | 'contact' | 'username' | 'password'] || ''} // Type-safe value binding
+              onChange={handleChange}
+              className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder={placeholder}
             />
+            {errors[name] && <span className="text-red-400 text-sm">{errors[name]}</span>}
           </div>
-          {form.file && (
-            <p className="text-sm text-gray-400 mt-1">
-              Selected: {form.file.name}
-            </p>
-          )}
-          {fileError && <span className="text-red-400 text-sm">{fileError}</span>}
+        ))}
+
+        <div className="space-y-2">
+          <label className="block text-sm font-medium text-gray-300">Bank Payment Slip (PDF/Image)</label>
+          <input
+            type="file"
+            onChange={handleFileChange}
+            accept=".jpg,.jpeg,.png,.pdf"
+            className="block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-400"
+          />
+          {fileName && <p className="text-sm text-gray-400">Selected file: {fileName}</p>}
+          {errors.file && <span className="text-red-400 text-sm">{errors.file}</span>}
         </div>
 
         <button
@@ -201,17 +147,7 @@ export default function Register() {
           disabled={loading}
           className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 rounded-lg text-white font-medium transition duration-200 flex items-center justify-center"
         >
-          {loading ? (
-            <>
-              <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-              </svg>
-              Processing...
-            </>
-          ) : (
-            "Register Account"
-          )}
+          {loading ? "Processing..." : "Register Account"}
         </button>
       </form>
     </div>
