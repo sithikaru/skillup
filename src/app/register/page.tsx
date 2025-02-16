@@ -359,12 +359,7 @@ export default function Register() {
             >
               Agreement & Confirmation
             </h2>
-            <p className="text-gray-300 leading-relaxed">
-              I have read and understood the above instructions. I agree to follow the
-              registration guidelines and acknowledge that I will only receive the{" "}
-              <span className="text-purple-300">Skill Up Participation Certificate</span>{" "}
-              and Recommendation Letter if I meet the attendance requirements.
-            </p>
+            
 
             {/* Confirmation Checkbox */}
             <label className="inline-flex items-center space-x-2">
@@ -376,9 +371,12 @@ export default function Register() {
                            transition duration-150 ease-in-out rounded"
                 required
               />
-              <span className="select-none">
-                <span className="text-purple-300">I agree</span> to the above statement.
-              </span>
+              <p className="text-gray-300 leading-relaxed">
+              I have read and understood the above instructions. I agree to follow the
+              registration guidelines and acknowledge that I will only receive the{" "}
+              <span className="text-purple-300">Skill Up Participation Certificate</span>{" "}
+              and Recommendation Letter if I meet the attendance requirements.
+            </p>
             </label>
           </motion.div>
         </motion.div>
