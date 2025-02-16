@@ -1,7 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { FaFacebook, FaInstagram, FaLinkedin, FaEnvelope } from "react-icons/fa";
+import { FaFacebook, FaInstagram, FaEnvelope } from "react-icons/fa";
 
 const Footer = () => {
   return (
@@ -37,21 +37,21 @@ const Footer = () => {
 
         {/* Social Links with Icons */}
         <div className="flex space-x-6 mt-4 md:mt-0">
-          <Link href="#" className="hover:text-skillup-accent transition">
+          <Link href="https://web.facebook.com/profile.php?id=100094610379837" className="hover:text-skillup-accent transition">
             <FaFacebook size={24} />
           </Link>
-          <Link href="#" className="hover:text-skillup-accent transition">
+          <Link href="https://www.instagram.com/skillup_3.0/" className="hover:text-skillup-accent transition">
             <FaInstagram size={24} />
           </Link>
-          <Link href="#" className="hover:text-skillup-accent transition">
+          {/* <Link href="#" className="hover:text-skillup-accent transition">
             <FaLinkedin size={24} />
-          </Link>
+          </Link> */}
         </div>
 
         {/* Copyright */}
         <p className="text-gray-600 text-sm text-center md:text-right mt-4 md:mt-0">
           &copy; {new Date().getFullYear()} Skill Up 3.0. All Rights Reserved.<br/>
-          Site by <Link href="https://www.linkedin.com/in/sithija-karunasena/" className="text-skillup-accent hover:underline">Sithija Karunasena</Link>
+          Site by <Link href="https://www.linkedin.com/in/sithija-lakshan-karunasena" className="text-skillup-accent hover:underline">Sithija Karunasena</Link>
         </p>
 
       </div>
