@@ -227,7 +227,7 @@ export default function Register() {
         >
           {/* Header */}
           <motion.h1
-            className="text-3xl md:text-4xl font-bold mb-4
+            className="text-2xl md:text-3xl font-bold mb-4 text-center
                        text-transparent bg-clip-text
                        bg-gradient-to-r from-purple-400 via-purple-500 to-purple-600"
             initial={{ opacity: 0, y: -20 }}
@@ -239,13 +239,13 @@ export default function Register() {
 
           {/* Certificate & Recommendation Letter Eligibility */}
           <motion.div
-            className="space-y-4"
+            className="space-y-4 border-t  border-gray-600 py-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.5 }}
           >
             <h2
-              className="text-2xl font-semibold text-transparent bg-clip-text 
+              className="text-2xl font-semibold text-transparent bg-clip-text text-center
                          bg-gradient-to-r from-purple-300 to-purple-500"
             >
               Certificate & Recommendation Letter Eligibility
