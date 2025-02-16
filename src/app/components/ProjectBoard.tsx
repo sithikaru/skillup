@@ -10,7 +10,7 @@ const teamMembers = [
   { role: "Project Secretary", name: "Dewmi Tharunya", image: "/Dewmi.jpg" },
   { role: "Project Treasurer", name: "Dinath Wijesooriya", image: "/Dinath.jpg" },
   { role: "Editor", name: "Deveen Rathnayake", image: "/Deveen.jpg" },
-  { role: "IT Director (The cool guy)", name: "Sithija Karunasena", image: "/Sithija.jpg" },
+  { role: "IT Director", name: "Sithija Karunasena", image: "/Sithija.jpg" },
 ];
 
 const AnimatedCard = ({
