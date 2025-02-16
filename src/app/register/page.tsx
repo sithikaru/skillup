@@ -355,7 +355,7 @@ export default function Register() {
           >
             <h2
               className="text-2xl font-semibold text-transparent bg-clip-text
-                         bg-gradient-to-r from-purple-400 via-purple-500 to-purple-600"
+                         bg-gradient-to-r from-purple-400 via-purple-500 to-purple-600 pt-5"
             >
               Agreement & Confirmation
             </h2>
@@ -371,12 +371,9 @@ export default function Register() {
                            transition duration-150 ease-in-out rounded"
                 required
               />
-              <p className="text-gray-300 leading-relaxed">
-              I have read and understood the above instructions. I agree to follow the
-              registration guidelines and acknowledge that I will only receive the{" "}
-              <span className="text-purple-300">Skill Up Participation Certificate</span>{" "}
-              and Recommendation Letter if I meet the attendance requirements.
-            </p>
+              <span className="select-none">
+                <span className="text-purple-300">I agree</span> to the above statement.
+              </span>
             </label>
           </motion.div>
         </motion.div>

@@ -4,7 +4,6 @@ import Image from "next/image";
 import { useRef, useEffect } from "react";
 
 const teamMembers = [
-//   { role: "Project Head (President)", name: "Hashaka Munasinghe", image: "/hashaka.jpg" },
   { role: "Chairperson", name: "Ranuli Sakya", image: "/Ranuli.jpg" },
   { role: "Project Head", name: "Thinuki Weerasinghe", image: "/Thinuki.jpg" },
   { role: "Secretary", name: "Monali Sooriyaarachchi", image: "/Monali.jpg" },
@@ -16,15 +15,23 @@ const teamMembers = [
 const AnimatedCard = ({ role, name, image }: { role: string; name: string; image: string }) => {
   return (
     <motion.div
-      whileHover={{ scale: 1.07, backdropFilter: "blur(20px)" }}
-      whileTap={{ scale: 0.95 }}
-      className="bg-white/10 backdrop-blur-lg border border-white/20 shadow-xl p-4 rounded-2xl text-white text-center flex flex-col items-center w-[250px] flex-shrink-0 mx-4 overflow-hidden"
+      whileHover={{ scale: 1.05, y: -5 }}
+      transition={{ type: "spring", stiffness: 300 }}
+      className="relative group bg-gradient-to-br from-white/5 to-white/[0.01] backdrop-blur-2xl border border-white/10 shadow-2xl p-5 rounded-2xl text-white text-center flex flex-col items-center w-[280px] flex-shrink-0 mx-3 overflow-hidden hover:border-white/20 transition-all duration-300"
     >
-      <div className="w-full h-56 relative rounded-lg overflow-hidden">
-        <Image src={image} alt={name} fill style={{ objectFit: 'cover' }} className="rounded-lg" />
+      <div className="absolute inset-0 bg-gradient-to-t from-purple-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      <div className="w-full aspect-[2/3] relative rounded-xl overflow-hidden">
+        <Image 
+          src={image} 
+          alt={name} 
+          fill 
+          className="object-cover grayscale-[15%] group-hover:grayscale-0 transition-all duration-500"
+        />
       </div>
-      <h3 className="text-lg md:text-xl font-bold mt-4">{name}</h3>
-      <p className="text-sm md:text-md opacity-80">{role}</p>
+      <h3 className="text-xl font-bold mt-6 bg-gradient-to-r from-purple-200 to-pink-200 bg-clip-text text-transparent">
+        {name}
+      </h3>
+      <p className="text-sm text-white/70 mt-2 font-medium">{role}</p>
     </motion.div>
   );
 };
@@ -33,69 +40,88 @@ const ProjectBoard = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Check if the device is primarily pointer-based (desktop/mouse) or touch-based
-    // (any-pointer: coarse) generally indicates a touchscreen device.
     const isTouchScreen = window.matchMedia("(any-pointer: coarse)").matches;
-
-    if (isTouchScreen) {
-      // Skip attaching the horizontal scroll by wheel for touch devices
-      return;
-    }
+    if (isTouchScreen) return;
 
     const handleWheelScroll = (event: WheelEvent) => {
       if (scrollRef.current) {
         event.preventDefault();
-        scrollRef.current.scrollLeft += event.deltaY * 1.2; // Adjust for desired speed
+        scrollRef.current.scrollLeft += event.deltaY * 1.2;
       }
     };
 
     const container = scrollRef.current;
-    if (container) {
-      container.addEventListener("wheel", handleWheelScroll, { passive: false });
-    }
+    container?.addEventListener("wheel", handleWheelScroll, { passive: false });
 
-    return () => {
-      if (container) {
-        container.removeEventListener("wheel", handleWheelScroll);
-      }
-    };
+    return () => container?.removeEventListener("wheel", handleWheelScroll);
   }, []);
 
   return (
-    <section
-      className="relative h-auto py-20 md:min-h-screen w-full flex flex-col items-center justify-center overflow-hidden text-center"
-      id="project-board"
-    >
-      {/* Animated Background */}
-      <motion.div
-        className="absolute inset-0 bg-gradient-to-b from-purple-900 via-indigo-800 to-black opacity-70"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.8 }}
-        transition={{ duration: 1.5 }}
-      />
+    <section className="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden text-center py-24 px-4 md:px-8 bg-[#0a0a0a]">
+      {/* Animated background elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <motion.div
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 9300000, ease: "easeOut" }}
+          className="absolute -top-1/4 left-1/4 w-[800px] h-[800px] bg-radial-gradient from-purple-500/10 to-transparent rounded-full blur-3xl"
+        />
+        <motion.div
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 200000000, delay: 0.5, ease: "easeOut" }}
+          className="absolute -bottom-1/4 right-1/4 w-[600px] h-[600px] bg-radial-gradient from-pink-500/10 to-transparent rounded-full blur-3xl"
+        />
+        
+        {/* Floating particles */}
+        {[...Array(3)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute bg-purple-500/50 rounded-full"
+            style={{
+              width: Math.random() * 5000 + 3000 + 'px',
+              height: Math.random() * 5000 + 3000 + 'px',
+              left: Math.random() * 1 + '%',
+              top: Math.random() * 1 + '%'
+            }}
+            animate={{
+              y: [0, -100, 0],
+              opacity: [0.5, 1, 0.5],
+              scale: [1, 1.2, 1]
+            }}
+            transition={{
+              duration: Math.random() * 999999999 + 9,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+        ))}
+      </div>
 
       {/* Title */}
       <motion.h2
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
-        className="relative z-10 text-3xl px-4 md:px-6 md:text-5xl font-extrabold uppercase leading-snug tracking-tight text-white"
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="relative z-10 text-4xl md:text-6xl font-bold bg-gradient-to-r from-purple-300 via-purple-100 to-purple-300 bg-clip-text text-transparent mb-16"
       >
-        Meet the <span className="text-purple-300">Project Board</span>
+        Meet the Project Board
       </motion.h2>
 
-      {/* Horizontally Scrolling Team Cards */}
-      <div ref={scrollRef} className="relative z-10 w-full max-w-6xl overflow-x-auto mt-10 no-scrollbar">
+      {/* Cards container */}
+      <div 
+        ref={scrollRef} 
+        className="relative z-10 w-full max-w-7xl overflow-x-auto no-scrollbar snap-x snap-mandatory"
+      >
         <motion.div
-          className="flex space-x-4 py-4 px-2 md:px-6 w-max"
+          className="flex gap-8 py-4 px-4 md:px-8 w-max mx-auto"
           initial="hidden"
           animate="visible"
           variants={{
-            hidden: { opacity: 0, y: 30 },
+            hidden: { opacity: 0 },
             visible: {
               opacity: 1,
-              y: 0,
-              transition: { staggerChildren: 0.2, delayChildren: 0.3 }
+              transition: { staggerChildren: 0.15, delayChildren: 0.3 }
             }
           }}
         >
@@ -110,8 +136,16 @@ const ProjectBoard = () => {
         </motion.div>
       </div>
 
-      {/* Subtle Noise Overlay */}
-      <div className="pointer-events-none absolute inset-0 z-5 bg-noise opacity-10" />
+      {/* Scroll indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.5 }}
+        transition={{ delay: 1.5 }}
+        className="relative z-10 mt-12 flex items-center justify-center gap-2 hover:opacity-100 transition-opacity"
+      >
+        <span className="h-2 w-2 rounded-full bg-purple-400 animate-pulse" />
+        <span className="text-sm text-white font-medium">Scroll to explore</span>
+      </motion.div>
     </section>
   );
 };
