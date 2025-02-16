@@ -145,7 +145,7 @@ const ProjectBoard = () => {
                 name={member.name}
                 image={member.image}
               >
-                {member.role === "IT Director" && <span className="text-[3px] text-white/70">The Cool Guy</span>}
+                {member.role === "IT Director" && <span className="text-[1px] text-white/70">The Cool Guy</span>}
               </AnimatedCard>
               
             </div>
