@@ -5,6 +5,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db, storage } from "@/lib/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
+import Image from "next/image";
 
 export default function Register() {
   const [form, setForm] = useState({
@@ -98,6 +99,16 @@ export default function Register() {
     }
   };
 
+  const generateWhatsAppMessage = () => {
+    const formattedMessage = `Hello, I need help with my Skill Up 3.0 registration.%0A%0A` +
+      `Name: ${form.name || "Not provided"}%0A` +
+      `Email: ${form.email || "Not provided"}%0A` +
+      `Contact: ${form.contact || "Not provided"}%0A` +
+      `Username: ${form.username || "Not provided"}`;
+    
+    return `https://wa.me/94741457706?text=${formattedMessage}`;
+  };
+
   return (
     <div className="max-w-md mx-auto bg-gray-800 p-8 rounded-xl shadow-lg space-y-6 mt-20 ">
       <h2 className="text-2xl font-bold tracking-wide bg-gradient-to-r from-purple-400 to-purple-700 bg-clip-text text-transparent text-center">
@@ -150,6 +161,19 @@ export default function Register() {
           {loading ? "Processing..." : "Register Account"}
         </button>
       </form>
+
+      {/* Floating WhatsApp Button */}
+      <a
+        href={generateWhatsAppMessage()}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed bottom-6 right-6 md:bottom-10 md:right-10 flex flex-col items-center space-y-1"
+      >
+        <div className="bg-green-500 p-4 rounded-full shadow-lg hover:bg-green-600 transition">
+          <Image src="/whatsapp-icon.svg" alt="WhatsApp" className="w-8 h-8" width={32} height={32} />
+        </div>
+        <span className="text-xs text-gray-300">Contact for any registration issues</span>
+      </a>
     </div>
   );
 }
