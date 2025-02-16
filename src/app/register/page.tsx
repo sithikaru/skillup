@@ -134,7 +134,7 @@ export default function Register() {
   };
 
   return (
-    <div className="max-w-lg mx-auto bg-gray-800 p-8 rounded-xl shadow-lg space-y-6 mt-20 ">
+    <div className="max-w-lg mx-auto  p-8 rounded-xl shadow-lg space-y-6 mt-20 ">
       <h2 className="text-2xl font-bold tracking-wide bg-gradient-to-r from-purple-400 to-purple-700 bg-clip-text text-transparent text-center">
         Skillup Registration
       </h2>
