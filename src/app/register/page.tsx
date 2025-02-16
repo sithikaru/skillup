@@ -172,7 +172,7 @@ export default function Register() {
         <div className="bg-green-500 p-4 rounded-full shadow-lg hover:bg-green-600 transition">
           <Image src="/whatsapp-icon.svg" alt="WhatsApp" className="w-8 h-8" width={32} height={32} />
         </div>
-        <span className="text-xs text-gray-300">Contact for any registration issues</span>
+        <span className="text-sm text-gray-300 text-center">Contact for<br/>any registration issues</span>
       </a>
     </div>
   );
