@@ -125,9 +125,11 @@ const About = () => {
       <AnimatedBackground />
 
       {/* Word-by-word Scroll Effect */}
-      <motion.div className="relative z-10 max-w-4xl text-2xl md:text-5xl font-extrabold uppercase leading-snug md:leading-loose tracking-tight text-white">
+      <motion.div className="relative z-10 max-w-6xl text-xl md:text-3xl font-extrabold uppercase leading-snug md:leading-loose tracking-tight text-white">
         <AnimatedText
-          text="Skill Up 3.0 is a transformative workshop series designed to bridge the gap between academic learning and real-world industry demands."
+          text="Skill Up 3.0 – Industry Survival is a transformative workshop series by the Leo Club of IIT, bridging the gap between academics and industry demands. Focused on technical, professional, and personal branding skills, it prepares students and young professionals for today’s competitive job market.
+
+Powered by the Leo Club of IIT, a dynamic, award-winning youth organization, this initiative fosters leadership, service, and professional growth, equipping participants with real-world expertise and career opportunities."
           scrollProgress={scrollProgress}
         />
       </motion.div>
