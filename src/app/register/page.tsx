@@ -217,8 +217,8 @@ export default function Register() {
             <span className="text-red-400 text-sm">{errors.file}</span>
           )}
         </div>
-        <div className="dark bg-gray-900 text-gray-200 min-h-screen py-8 flex justify-center items-start">
-      <div className="dark bg-gray-900 text-gray-200 min-h-screen py-8 flex justify-center items-start px-2">
+        <div className="dark  text-gray-200 min-h-screen py-8 flex justify-center items-start">
+      <div className="dark  text-gray-200 min-h-screen py-8 flex justify-center items-start px-2">
         <motion.div
           className=""
           variants={containerVariants}
