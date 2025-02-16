@@ -14,10 +14,12 @@ const teamMembers = [
 ];
 
 const AnimatedCard = ({
+  children,
   role,
   name,
   image,
 }: {
+  children?: React.ReactNode;
   role: string;
   name: string;
   image: string;
@@ -41,6 +43,7 @@ const AnimatedCard = ({
         {name}
       </h3>
       <p className="text-sm text-white/70 mt-2 font-medium">{role}</p>
+      {children}
     </motion.div>
   );
 };
@@ -136,12 +139,16 @@ const ProjectBoard = () => {
           }}
         >
           {teamMembers.map((member, index) => (
-            <AnimatedCard
-              key={index}
-              role={member.role}
-              name={member.name}
-              image={member.image}
-            />
+            <div key={index}>
+              <AnimatedCard
+                role={member.role}
+                name={member.name}
+                image={member.image}
+              >
+                {member.role === "IT Director" && <span className="text-[3px] text-white/70">The Cool Guy</span>}
+              </AnimatedCard>
+              
+            </div>
           ))}
         </motion.div>
       </div>
