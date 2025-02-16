@@ -119,7 +119,7 @@ const About = () => {
     <section
       ref={ref}
       className="relative h-auto py-20 md:min-h-screen w-full flex flex-col items-center justify-center overflow-hidden px-4 md:px-6 text-center"
-      id="next-section"
+      id="about-section"
     >
       {/* Animated Background */}
       <AnimatedBackground />

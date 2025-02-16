@@ -21,7 +21,7 @@ const Hero = () => {
 
   // Scroll function
   const scrollToNextSection = () => {
-    const nextSection = document.getElementById("next-section");
+    const nextSection = document.getElementById("about-section");
     if (nextSection) {
       nextSection.scrollIntoView({ behavior: "smooth" });
     }

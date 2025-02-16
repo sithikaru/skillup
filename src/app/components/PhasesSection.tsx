@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { useState } from "react";
 
 const phases = [
@@ -28,7 +29,7 @@ const PhasesSection = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
-    <section className="relative py-12 md:py-24 bg-black text-white">
+    <section className="relative py-12 md:py-24 bg-black text-white" id="phases-section">
       <div className="container mx-auto px-4 md:px-8 py-8 md:py-16 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16">
         {/* Left Side - Dynamic Phase Description */}
         <motion.div
@@ -70,6 +71,9 @@ const PhasesSection = () => {
             </motion.div>
           ))}
         </div>
+        <Link href="/materials" className="px-3 py-2 hover:text-purple-400 transition">
+              Access Learning Materials
+            </Link>
       </div>
     </section>
   );

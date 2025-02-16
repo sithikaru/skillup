@@ -4,9 +4,11 @@ import { ReactNode } from "react";
 import Navbar from "@/app/components/Navbar";
 import Footer from "@/app/components/Footer";
 
+
+
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className="h-screen w-screen overflow-y-scroll scroll-snap-y snap-mandatory">
       <head>
         {/* Google Font - Oswald or Anton */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
