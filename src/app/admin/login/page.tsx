@@ -14,7 +14,7 @@ export default function AdminLogin() {
 
     // Hardcoded admin credentials
     const ADMIN_USERNAME = "admin";
-    const ADMIN_PASSWORD = "su2025";
+    const ADMIN_PASSWORD = "skillup2025";
 
     if (form.username === ADMIN_USERNAME && form.password === ADMIN_PASSWORD) {
       localStorage.setItem("adminAuth", "true"); // Save login state
