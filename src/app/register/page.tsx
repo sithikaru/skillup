@@ -121,10 +121,10 @@ export default function Register() {
 
       <form onSubmit={handleSubmit} className="space-y-4">
         {[
-          { label: "Full Name", name: "name", type: "text", placeholder: "John Doe" },
-          { label: "Email", name: "email", type: "email", placeholder: "john.20230000@iit.ac.lk" },
+          { label: "Full Name", name: "name", type: "text", placeholder: "Full name" },
+          { label: "Email", name: "email", type: "email", placeholder: "youremail@email.com" },
           { label: "Contact Number", name: "contact", type: "tel", placeholder: "0712345678" },
-          { label: "Username", name: "username", type: "text", placeholder: "name_20230001" },
+          { label: "Username", name: "username", type: "text", placeholder: "userName" },
           { label: "Password", name: "password", type: "password", placeholder: "••••••••" },
         ].map(({ label, name, type, placeholder }) => (
           <div key={name} className="space-y-2">
