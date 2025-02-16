@@ -71,12 +71,7 @@ const Navbar = () => {
             </Link>
           </motion.div>
 
-          <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-            <Link href="/about-us" className="px-3 py-2 hover:text-purple-400 transition">
-              About Us
-            </Link>
-          </motion.div>
-
+   
           <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
             <Link href="/materials" className="px-3 py-2 hover:text-purple-400 transition">
               Access Learning Materials
