@@ -26,7 +26,7 @@ const AnimatedCard = ({
     <motion.div
       whileHover={{ scale: 1.05, y: -5 }}
       transition={{ type: "spring", stiffness: 300 }}
-      className="relative group bg-gradient-to-br from-white/5 to-white/[0.01] backdrop-blur-2xl border border-white/10 shadow-2xl p-5 rounded-2xl text-white text-center flex flex-col items-center w-[280px] flex-shrink-0 mx-3 overflow-hidden hover:border-white/20 transition-all duration-300"
+      className="relative group bg-gradient-to-br from-white/5 to-white/[0.01] backdrop-blur-2xl border border-white/10  p-5 rounded-2xl text-white text-center flex flex-col items-center w-[280px] flex-shrink-0 mx-3 overflow-hidden hover:border-white/20 transition-all duration-300"
     >
       <div className="absolute inset-0 bg-gradient-to-t from-purple-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       <div className="w-full aspect-[2/3] relative rounded-xl overflow-hidden">
