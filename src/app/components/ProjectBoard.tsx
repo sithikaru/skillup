@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useRef, useEffect } from "react";
 
 const teamMembers = [
-  { role: "Project Head (President)", name: "Hashaka Munasinghe", image: "/hashaka.jpg" },
+//   { role: "Project Head (President)", name: "Hashaka Munasinghe", image: "/hashaka.jpg" },
   { role: "Chairperson", name: "Ranuli Sakya", image: "/Ranuli.jpg" },
   { role: "Project Head", name: "Thinuki Weerasinghe", image: "/Thinuki.jpg" },
   { role: "Secretary", name: "Monali Sooriyaarachchi", image: "/Monali.jpg" },
