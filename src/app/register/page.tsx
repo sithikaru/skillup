@@ -398,18 +398,18 @@ export default function Register() {
         href={generateWhatsAppMessage()}
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 md:bottom-10 md:right-10 flex flex-col items-center space-y-1"
+        className="fixed bottom-6 right-6 md:bottom-10 md:right-10 flex flex-col items-center space-y-1 bg-[#000000a7] p-3"
       >
         <div className="bg-green-500 p-4 rounded-full shadow-lg hover:bg-green-600 transition">
           <Image
             src="/whatsapp-icon.svg"
             alt="WhatsApp"
-            className="w-8 h-8"
-            width={32}
-            height={32}
+            className="w-4"
+            width={16}
+            height={16}
           />
         </div>
-        <span className="text-sm text-gray-300 text-center">
+        <span className="text-xs text-gray-300 text-center">
           Contact for
           <br />
           any registration issues
