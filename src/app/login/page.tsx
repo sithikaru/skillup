@@ -22,7 +22,7 @@ export default function LoginPage() {
     setLoading(true);
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      router.push("/Dashboard"); // Redirect to dashboard
+      router.push("/Dashboard"); // Redirect to Dashboard
     } catch (any) {
       setError("Invalid email or password. Please try again.");
     } finally {

@@ -14,7 +14,7 @@ export async function protectRoute(callback: Function) {
       if (userDoc.exists() && userDoc.data().verified) {
         resolve(callback()); // Allow access if verified
       } else {
-        window.location.href = "/dashboard"; // Redirect unverified users
+        window.location.href = "/Dashboard"; // Redirect unverified users
       }
     });
   });

@@ -18,7 +18,7 @@ export default function AdminLogin() {
 
     if (form.username === ADMIN_USERNAME && form.password === ADMIN_PASSWORD) {
       localStorage.setItem("adminAuth", "true"); // Save login state
-      window.location.href = "/admin"; // Redirect to dashboard
+      window.location.href = "/admin"; // Redirect to Dashboard
     } else {
       setError("Invalid username or password");
     }

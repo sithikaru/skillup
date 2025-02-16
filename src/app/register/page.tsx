@@ -86,7 +86,7 @@ export default function Register() {
       });
 
       alert("Registration submitted for verification!");
-      window.location.href = "/dashboard";
+      window.location.href = "/Dashboard";
     } catch (error: any) {
       console.error("Registration Error:", error);
       setErrors(prev => ({ ...prev, form: error.message || "An unexpected error occurred" }));
