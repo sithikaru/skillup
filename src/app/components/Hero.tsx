@@ -51,7 +51,7 @@ const Hero = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 3 }} // Match animation timing
-        className="mt-8 md:mt-12 z-10"
+        className=" z-10"
       >
         <Link
           href="/register"
@@ -63,7 +63,7 @@ const Hero = () => {
 
       {/* Bouncing Scroll Down Button with Custom Icon */}
       <motion.div
-        className="absolute bottom-4 md:bottom-10 cursor-pointer mb-4 md:mb-10"
+        className="mt-10 bottom-4 md:bottom-10 cursor-pointer mb-4 md:mb-10"
         onClick={scrollToNextSection}
         initial={{ y: 0 }}
         animate={{ y: [0, 10, 0] }}
