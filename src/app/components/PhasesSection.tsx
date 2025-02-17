@@ -71,9 +71,14 @@ const PhasesSection = () => {
             </motion.div>
           ))}
         </div>
-        <Link href="/materials" className="px-3 py-2 hover:text-purple-400 transition">
-              Access Learning Materials
-            </Link>
+        
+        <Link
+  href="/materials"
+  className="px-5 py-3 bg-gradient-to-r from-purple-600 to-purple-400 text-white font-semibold rounded-lg shadow-md hover:shadow-lg hover:from-purple-700 hover:to-purple-500 transition-all duration-300 ease-in-out transform hover:scale-105"
+>
+  Access Learning Materials
+</Link>
+
       </div>
     </section>
   );
