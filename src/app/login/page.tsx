@@ -4,7 +4,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { auth } from "@/lib/firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
 import { useRouter } from "next/navigation";
 
 const images = ["/image1.jpg", "/image2.jpg", "/image3.jpg"];
@@ -14,6 +14,8 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [resetMessage, setResetMessage] = useState("");
+
   const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -23,10 +25,24 @@ export default function LoginPage() {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       router.push("/Dashboard"); // Redirect to Dashboard
-    } catch (any) {
+    } catch (err) {
       setError("Invalid email or password. Please try again.");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleForgotPassword = async () => {
+    if (!email) {
+      setError("Please enter your email first.");
+      return;
+    }
+
+    try {
+      await sendPasswordResetEmail(auth, email);
+      setResetMessage("Password reset email sent! Check your inbox.");
+    } catch (err) {
+      setError("Failed to send password reset email. Please check your email.");
     }
   };
 
@@ -60,12 +76,33 @@ export default function LoginPage() {
             Don&apos;t have an account? <a href="/register" className="text-[#a78bfa] hover:underline">Sign up</a>
           </p>
           {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
+          {resetMessage && <p className="text-green-500 text-sm mb-4">{resetMessage}</p>}
           
           <form onSubmit={handleLogin} className="space-y-4">
-            <input type="email" className="w-full p-3 rounded bg-[#2a273f] text-white" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-            <input type="password" className="w-full p-3 rounded bg-[#2a273f] text-white" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+            <input 
+              type="email" 
+              className="w-full p-3 rounded bg-[#2a273f] text-white" 
+              placeholder="Email" 
+              value={email} 
+              onChange={(e) => setEmail(e.target.value)} 
+              required 
+            />
+            <input 
+              type="password" 
+              className="w-full p-3 rounded bg-[#2a273f] text-white" 
+              placeholder="Password" 
+              value={password} 
+              onChange={(e) => setPassword(e.target.value)} 
+              required 
+            />
             <div className="flex items-center justify-between">
-              <a href="/ForgotPassword" className="text-[#a78bfa] hover:underline text-sm">Forgot password?</a>
+              <button 
+                type="button" 
+                onClick={handleForgotPassword} 
+                className="text-[#a78bfa] hover:underline text-sm"
+              >
+                Forgot password?
+              </button>
             </div>
             <motion.button 
               whileHover={{ scale: 1.05 }}
