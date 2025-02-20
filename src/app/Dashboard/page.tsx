@@ -96,6 +96,7 @@ export default function Dashboard() {
           </h3>
           <ul className="space-y-6">
             <li className="bg-gray-900 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+              <Link href="/materials/phase/phase-01">
               <h4 className="text-2xl font-semibold mb-2">
                 Phase 01: Student Support
               </h4>
@@ -103,8 +104,10 @@ export default function Dashboard() {
                 Foundation for second-year degree modules. Tailored for Computer
                 Science to Business Management.
               </p>
+              </Link>
             </li>
             <li className="bg-gray-900 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+              <Link href="/materials/phase/phase-02">
               <h4 className="text-2xl font-semibold mb-2">
                 Phase 02: Industry Survivors
               </h4>
@@ -112,8 +115,10 @@ export default function Dashboard() {
                 Live Broadcast with industry experts sharing experiences and
                 insights for internship success.
               </p>
+              </Link>
             </li>
             <li className="bg-gray-900 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+              <Link href="/materials/phase/phase-03">
               <h4 className="text-2xl font-semibold mb-2">
                 Phase 03: Industry Survival
               </h4>
@@ -121,6 +126,7 @@ export default function Dashboard() {
                 Hands-on workshops for personal development, portfolio building,
                 and interview preparation.
               </p>
+              </Link>
             </li>
           </ul>
         </motion.div>
@@ -169,7 +175,7 @@ export default function Dashboard() {
             </li>
             <li>
               <Link
-                href="/past-events"
+                href="`/materials/phase/phase-01"
                 className="text-cyan-400 hover:underline"
               >
                 Past Events
