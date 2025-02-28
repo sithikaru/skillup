@@ -35,7 +35,7 @@ export default function Register() {
           Skill Up 3.0
         </h2>
         <p className="mt-4 text-lg text-gray-300">
-          Registrations are closed for Skill Up 3.0.
+          Registrations are closed for Skill Up 3.0
         </p>
         <p className="mt-2 text-gray-400">
           Stay tuned for future events and updates!
@@ -61,7 +61,7 @@ export default function Register() {
         <span className="text-xs text-gray-300 text-center">
           Contact for
           <br />
-          more info
+          any issues.
         </span>
       </a>
     </div>
